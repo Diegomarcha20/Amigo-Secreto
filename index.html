@@ -18,6 +18,10 @@
         </header>
         
         <section class="input-section">
+            <div id="welcome-message" class="welcome-message">
+                <h2>¡Bienvenido al juego de Amigo Secreto! Ingresa los nombres de tus amigos para comenzar.</h2>
+            </div>
+
             <h2 class="section-title">Digite el nombre de sus amigos</h2>
             <div class="input-wrapper">
                 <input type="text" id="amigo" class="input-name" placeholder="Escribe un nombre">
@@ -25,7 +29,11 @@
             </div>
            
             <ul id="listaAmigos" class="name-list" aria-labelledby="listaAmigos" role="list"></ul>
-            <ul id="resultado" class="result-list" aria-live="polite"></ul>
+
+            <div id="resultado-container" class="result-container">
+                <h2 class="section-title">Resultado del Sorteo</h2>
+                <ul id="resultado" class="result-list" aria-live="polite"></ul>
+            </div>
 
             <div class="button-container">
                 <button class="button-draw" onclick="sortearAmigo()" aria-label="Sortear amigo secreto">
@@ -34,6 +42,13 @@
                 </button>
             </div>
         </section>
+
+        <div id="modal-final" class="modal">
+            <div class="modal-content">
+                <p>El juego ha terminado. ¿Quieres volver a empezar?</p>
+                <button onclick="reiniciarJuego()">Reiniciar</button>
+            </div>
+        </div>
     </main>
 
     <script src="app.js" defer></script>
