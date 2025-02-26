@@ -1,12 +1,10 @@
 let amigos = [];
 
-
 function agregarAmigo() {
     const input = document.getElementById('amigo');
     const nombre = input.value.trim();
 
     if (nombre) {
-     
         const nombreFormateado = nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase();
         amigos.push(nombreFormateado);
         input.value = '';
@@ -17,10 +15,9 @@ function agregarAmigo() {
     }
 }
 
-
 function actualizarListaAmigos() {
     const listaAmigos = document.getElementById('listaAmigos');
-    listaAmigos.innerHTML = ''; 
+    listaAmigos.innerHTML = '';
 
     amigos.forEach((amigo, index) => {
         const li = document.createElement('li');
@@ -30,8 +27,21 @@ function actualizarListaAmigos() {
 }
 
 function sortearAmigo() {
+    const resultadoContainer = document.getElementById('resultado-container');
+    const resultado = document.getElementById('resultado');
+    const modalFinal = document.getElementById('modal-final');
+
     if (amigos.length < 2) {
-        alert("Necesitas al menos 2 amigos para realizar el sorteo.");
+        resultadoContainer.style.display = 'block';
+        resultado.innerHTML = '<li>Necesitas al menos 2 amigos para realizar el sorteo.</li>';
+        resetearJuego();
+        return;
+    }
+
+    if (amigos.length % 2 !== 0) {
+        resultadoContainer.style.display = 'block';
+        resultado.innerHTML = '<li>El número de amigos debe ser par para poder jugar.</li>';
+        resetearJuego();
         return;
     }
 
@@ -41,8 +51,7 @@ function sortearAmigo() {
         [amigosSorteados[i], amigosSorteados[j]] = [amigosSorteados[j], amigosSorteados[i]];
     }
 
-    const resultado = document.getElementById('resultado');
-    resultado.innerHTML = ''; 
+    resultado.innerHTML = '';
 
     amigos.forEach((amigo, index) => {
         const li = document.createElement('li');
@@ -50,19 +59,25 @@ function sortearAmigo() {
         resultado.appendChild(li);
     });
 
-    const resultadoContainer = document.getElementById('resultado-container');
     resultadoContainer.style.display = 'block';
 
     setTimeout(() => {
-        const modalFinal = document.getElementById('modal-final');
         modalFinal.style.display = 'flex';
-    }, 5000); 
+    }, 5000);
 }
 
-0
+function resetearJuego() {
+    setTimeout(() => {
+        amigos = [];
+        actualizarListaAmigos();
+        document.getElementById('resultado').innerHTML = '';
+        document.getElementById('resultado-container').style.display = 'none';
+    }, 3000);
+}
+
 function reiniciarJuego() {
     const modalFinal = document.getElementById('modal-final');
-    modalFinal.style.display = 'none'; 
+    modalFinal.style.display = 'none';
 
     amigos = [];
     actualizarListaAmigos();
@@ -84,6 +99,5 @@ document.getElementById('amigo').addEventListener('keypress', function (e) {
         agregarAmigo();
     }
 });
-
 
 document.getElementById('resultado-container').style.display = 'none';
